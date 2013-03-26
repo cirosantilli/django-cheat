@@ -9,63 +9,44 @@ from django.core.urlresolvers import reverse
 import django.conf.global_settings as DEFAULT_SETTINGS
 
 #===================================================
-# vars
+# dir tree
 #===================================================
 
-#dir tree
-# my_django_root/apps
-# my_django_root/site_root/apps
-# my_django_root/templates
-# my_django_root/site_root
-# my_django_root/site_root/templates
-# my_django_root/site_root/site_root/settings.py
+#dir tree:
+#- /my_django_root/apps/
+#- /              /projects/project_root/apps/
+#- /              /                     /templates/
+#- /              /                     /project_root/settings.py
+#- /              /static/
+#- /              /templates/
 
 #app load order is given by the python path
 #template load order will be:
 #  system template dirs
 #  app template dirs
 
-site_root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-my_django_root = os.path.dirname(site_root)
+project_root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+my_django_root = os.path.dirname(os.path.dirname(project_root))
 
-site_apps_dir = os.path.join(site_root,'apps')
-site_templates_dir = os.path.join(site_root,'templates')
-site_static_files_dir = os.path.join(site_root,'static')
+#for current project only:
+project_apps_dir = os.path.join(project_root,'apps')
+project_templates_dir = os.path.join(project_root,'templates')
+project_static_files_dir = os.path.join(project_root,'static')
 
-global_apps_dir = os.path.join(my_django_root,"apps")            #multi project apps
-global_templates_dir = os.path.join(my_django_root,'templates')  #multi project templates
+#ma be shared between projects:
+global_apps_dir = os.path.join(my_django_root,"apps")
+global_templates_dir = os.path.join(my_django_root,'templates')
 global_static_files_dir = os.path.join(my_django_root,'static')
 
-sys.path.append(site_apps_dir) #project only apps
-sys.path.append(global_apps_dir) #apps that may be shared between projects
+sys.path.append(project_apps_dir)
+sys.path.append(global_apps_dir)
 
 #===================================================
 # non app settings
 #===================================================
 
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
-
 APPEND_SLASH=True
 #https://docs.djangoproject.com/en/dev/ref/settings/#append-slash
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'elearn_django',              # Or path to database file if using sqlite3.
-        'USER': 'test',                       # Not used with sqlite3.
-        'PASSWORD': 'asdf',                   # Not used with sqlite3.
-        'HOST': '',                           # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                           # Set to empty string for default. Not used with sqlite3.
-    }
-}
-
-DEBUG = True
-
-# default date format. l10n has precedence over this if l10n is true.
-DATE_FORMAT="Y-m-d"
-DATETIME_FORMAT = "Y-m-d H:i:s"
 
 INSTALLED_APPS = [
     'django.contrib.auth',
@@ -92,9 +73,67 @@ INSTALLED_APPS = [
     'project_specific',
 ]
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'elearn_django',              # Or path to database file if using sqlite3.
+        'USER': 'test',                       # Not used with sqlite3.
+        'PASSWORD': 'asdf',                   # Not used with sqlite3.
+        'HOST': '',                           # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                           # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+##datetime
+
+#default date format. l10n has precedence over this if l10n is true.
+
+DATE_FORMAT="Y-m-d"
+DATETIME_FORMAT = "Y-m-d H:i:s"
+SHORT_DATETIME_FORMAT = "Y-m-d H:i:s"
+
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+MEDIA_ROOT = ''
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = ''
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    # Uncomment the next line for simple clickjacking protection:
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+#which urls.py file to use for entire site
+ROOT_URLCONF = 'elearn.urls'
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = '59wh9zzfvdj09owpp0=+w=nc_nmdw_*(k*0yw=uq_2k7au2or4'
+
+SITE_ID = 1
+
+##deployment
+
+#users listed unser ADMINS will get emails whenever an uncaught exception
+#happens and if DEBUG is True
+#Those exceptions are always logged into the server's error logs.
+DEBUG = True
+ADMINS = (
+    # ('Your Name', 'your_email@example.com'),
+)
+MANAGERS = ADMINS
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -125,36 +164,7 @@ LOGGING = {
     }
 }
 
-MANAGERS = ADMINS
-
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
-
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
-
-#which urls.py file to use for entire site
-ROOT_URLCONF = 'elearn.urls'
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '59wh9zzfvdj09owpp0=+w=nc_nmdw_*(k*0yw=uq_2k7au2or4'
-
-SHORT_DATETIME_FORMAT = "Y-m-d H:i:s"
-
-SITE_ID = 1
+##{static
 
 #static files are stuff like css and images
 #for deployement, set STATIC_ROOT and do : ./manage.py collectstatic
@@ -174,7 +184,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    site_static_files_dir,
+    project_static_files_dir,
     global_static_files_dir,
 )
 
@@ -186,6 +196,8 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+#}
+
 #context processors: add context to every template
 #TEMPLATE_CONTEXT_PROCESSORS.append('django_tables2_datatables.context_processor.processor')
 
@@ -196,7 +208,7 @@ TEMPLATE_DEBUG = DEBUG
 # Always use forward slashes, even on Windows.
 # Don't forget to use absolute paths, not relative paths.
 TEMPLATE_DIRS = (
-    site_templates_dir,
+    project_templates_dir,
     global_templates_dir,
 )
 
