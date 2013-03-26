@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% block title %}create poll{% endblock %}
+
+{% block content_title %}create poll{% endblock %}
+
+{% block content %}
+<form action="{% url "polls.views.create" %}" method="post">{% csrf_token %}
+        {{ form.as_p }}
+    <input type="submit" value="Submit" />
+    </form>
+{% endblock %}

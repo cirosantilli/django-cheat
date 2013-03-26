@@ -1,0 +1,11 @@
+#auth-top-bar
+{
+  /*border-bottom: 1px solid #0A0; */
+}
+
+#auth-top-bar > span
+{
+  /*margin-left:2px;*/
+  /*padding-right:2px;*/
+  /*border-right: 2px solid #0A0; */
+}

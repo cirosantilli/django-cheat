@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load django_tables2 %}
+
+{% block title %}{{ owner.username }} &gt {{ item2.id2 }}{% endblock %}
+
+{% block content_title %}{{ owner.username }} &gt {{ item2.id2 }}{% endblock %}
+
+{% block content %}
+
+{% comment %} TODO make this work with the table
+{% render_table update_table %}
+{% if user.username == owner.username %}
+    <table>
+        <tr>
+            <td>{% trans "update" %}</td>
+            <td>
+                <form action="{% url "user_user_groups_update_list" owner.username item2.id2 %}"
+                        id="{{ update_form_id }}" method="post">{% csrf_token %}
+                    <input type="submit" name="update" value="do it" />
+                </form>
+            </td>
+        </tr>
+    </table>
+{% endif %}
+{% endcomment %}
+
+<form action="{% url 'user_user_groups_update_list' owner.username item2.id2 %}" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <p><input type="submit" value="{% trans "update" %}" /></p>
+</form>
+
+{% endblock %}

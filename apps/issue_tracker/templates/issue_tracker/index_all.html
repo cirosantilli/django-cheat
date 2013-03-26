@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load django_tables2 %}
+
+{% block content %}
+
+    <h2>{% trans "server" %}</h2>
+
+      <div>{% trans "total items in database" %}: {{ n_items_db }}</div>
+
+      <h3>{% trans "filter" %}</h3>
+
+        <h4>{% trans "user list" %}</h4>
+
+          <h5>{% trans "filter" %}</h5>
+
+            {% render_table user_list_table.filter %}
+
+          <h5>{% trans "user lists" %}</h5>
+
+            {% render_table user_list_table %}
+
+        <h4>{% trans "uri list" %}</h4>
+
+          <h5>{% trans "filter" %}</h5>
+
+            {% render_table uri_list_table.filter %}
+
+          <h5>{% trans "filter" %}</h5>
+
+            {% render_table uri_list_table %}
+
+      <h3>{% trans "get data" %}</h3>
+
+      <form id="{{ uri_list_table.bulk_form_id }}" action="{% url urls_thisapp.index_all %}"
+              method="get">
+              <table><tr>
+                  <td>{% trans "get data" %}</td>
+                  <td><input type="submit" name="get-data" value="do it" /></td>
+              </tr></table>
+      </form>
+
+    <h2>{% trans "local" %}</h2>
+
+      <h3>{% trans "filter" %}</h3>
+
+        {% render_table table.filter %}
+
+      <h3>{% trans "data" %}</h3>
+
+        {% render_table table %}
+
+    <h2>{% trans "edit data" %}</h2>
+
+      {% if user.is_authenticated %}
+          <table>
+              <tr>
+                  <td>{% trans "create new" %}</td>
+                  <td><a href="{% url urls_thisapp.create_issue %}">{% trans "do it" %}</a></td>
+              </tr>
+          </table>
+      {% endif %}
+
+{% endblock %}

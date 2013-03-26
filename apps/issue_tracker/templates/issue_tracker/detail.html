@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load django_tables2 %}
+
+{% block content %}
+
+    <h2>{% trans "title" %}</h2>
+    {{ issue.title }}
+
+    <h2>{% trans "creator" %}</h2>
+    {% include "accounts/user_link.html" with username=issue.creator.username %}
+
+    <h2>{% trans "created" %}</h2>
+    {{ issue.creation_date }}
+
+    <h2>{% trans "uri" %}</h2>
+    {{ issue.uri }}
+
+    <h2>{% trans "description" %}</h2>
+    {{ issue.description }}
+
+{% endblock %}

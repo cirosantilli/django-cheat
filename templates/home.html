@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% comment %}
+
+home page
+
+{% endcomment %}
+
+{% block title %}home{% endblock %}
+
+{% block content_title %}home{% endblock %}
+
+{% block content %}
+    <p>this is static home page.</p>
+    <img src="{{ STATIC_URL }}/img/django_logo.gif" alt="django logo" />
+{% endblock %}

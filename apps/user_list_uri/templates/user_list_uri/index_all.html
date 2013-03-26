@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load django_tables2 %}
+
+{% block title %}{% trans "uri-lists" %}{% endblock %}
+
+{% block content %}
+
+    <h2>{% trans "view" %}</h2>
+
+    <div>{% trans "total items in database" %}: {{ total_items_db }}</div>
+
+    <h3>{% trans "filter" %}</h3>
+    {% render_table table.filter %}
+
+    <h4>{% trans "data" %}</h4>
+    {% render_table table %}
+
+    {% if user.is_authenticated %}
+        <h2>{% trans "edit data" %}</h2>
+                <table>
+                    <form action="{% url urls_thisapp.bulk_action user.username %}"
+                            id="{{ table.bulk_form_id }}" method="post">{% csrf_token %}
+                        <tr>
+                            <td>{% trans "copy selected" %}</td>
+                            <td><input type="submit" name="copy" value="do it" /></td>
+                        </tr>
+                    </form>
+                <tr>
+                    <td>{% trans "create new" %}</td>
+                    <td><a href="{% url urls_thisapp.create_list user.username %}">{% trans "do it" %}</a></td>
+                </tr>
+        </table>
+    {% endif %}
+
+{% endblock %}

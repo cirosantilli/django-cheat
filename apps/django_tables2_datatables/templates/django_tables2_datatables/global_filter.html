@@ -1,0 +1,10 @@
+{% load i18n %}
+
+{# sample include: include "datatable/global_filter.html" with target_table="grouptable" #}
+
+<tr>
+    <td align="center">{% trans "global" %}</td>
+    <td align="center"><input type="text"     target_table="{{ target_column }}" class="datatable_global_filter" ></td>
+    <td align="center"><input type="checkbox" target_table="{{ target_column }}" class="datatable_global_regex" ></td>
+    <td align="center"><input type="checkbox" target_table="{{ target_column }}" class="datatable_global_smart" checked></td>
+</tr>

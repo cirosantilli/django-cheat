@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% comment %}
+
+must put this for url with quotes see https://docs.djangoproject.com/en/dev/intro/tutorial03/ note at the end 
+
+{% endcomment %}
+
+{% block title %}about{% endblock %}
+
+{% block content_title %}{{ poll.question }}{% endblock %}
+
+{% block content %}
+    <ul>
+    {% for choice in poll.choice_set.all %}
+        <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'poll_detail' poll.id %}">Vote again?</a>
+{% endblock %}

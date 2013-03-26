@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load django_tables2 %}
+
+{% block title %}{{ owner.username }} &gt {{ item2.id2 }}{% endblock %}
+
+{% block content_title %}{{ owner.username }} &gt {{ item2.id2 }}{% endblock %}
+
+{% block content %}
+
+<form action="{% url urls_thisapp.update_list owner.username list.id2 %}" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <p><input type="submit" value="{% trans "update" %}" /></p>
+</form>
+
+{% endblock %}

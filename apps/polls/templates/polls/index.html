@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+
+{% comment %}
+must put this for url with quotes see https://docs.djangoproject.com/en/dev/intro/tutorial03/ note at the end
+{% endcomment %}
+
+{% block title %}{% trans "polls" %}{% endblock %}
+
+{% block content_title %}{% trans "polls" %}{% endblock %}
+
+{% block content %}
+    <img src="{{ STATIC_URL }}polls/img/poll.jpg" alt="poll" />
+    <div><a href="{% url 'poll_create' %}">{% trans "create new poll" %}</a></div>
+    {% include "pagination.html" %}
+    {% if items %}
+        <table>
+            <tr>
+                <th>{% trans "id" %}</th>
+                <th>{% trans "question" %}</th>
+                <th>{% trans "creator" %}</th>
+                <th>{% trans "date published" %}</th>
+            </tr>
+            {% for item in items %}
+                <tr>
+                    <th><a href="{% url 'poll_detail' item.pk %}">{{ item.pk }}</a></th>
+                    <th><a href="{% url 'poll_detail' item.pk %}">{{ item.question }}</a></th>
+                    <th>{% include "accounts/user_link.html" with username=item.creator.username %}</th>
+                    <th>{{ item.pub_date }}</th>
+                </tr>
+            {% endfor %}
+        </table> 
+            {# list view: <ul><li><a href="{% url 'poll_detail' poll.id %}">{{ poll.question }}</a></li></ul> #}
+            {# url is absolute magic: if looks for the polls.view.detail, and from the urlconf deduces (reverse) what is its url, supposing each view func has a single url #}
+    {% else %}
+        <p>{% trans "there are no polls" %}</p>
+    {% endif %}
+    {% include "pagination.html" %}
+    <div><a href="{% url 'poll_create' %}">{% trans "create new poll" %}</a></div>
+{% endblock %}

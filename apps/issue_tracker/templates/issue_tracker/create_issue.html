@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+
+{% block content %}
+<form action="{% url urls_thisapp.create_issue %}" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <p><input type="submit" value="{% trans "create" %}" /></p>
+</form>
+{% endblock %}

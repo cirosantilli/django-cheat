@@ -1,0 +1,7 @@
+{% load url from future %}
+{# mugshot with link to the user's profile #}
+{# include "accounts/user_link.html" with username="someusername" #}
+{# TODO figure how to make this work #}
+<a href="{% url 'userena.views.profile_detail' username %}">
+    <img class="mugshot" src="{{ username.profile.get_mugshot_url }}" alt="{{ username }}" />
+</a>

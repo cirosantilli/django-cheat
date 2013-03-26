@@ -1,0 +1,4 @@
+{% load url from future %}
+{# link to the user's profile #}
+{# include "accounts/user_link.html" with username="someusername" #}
+<a href="{% url 'userena_profile_detail' username %}">{{ username }}</a>

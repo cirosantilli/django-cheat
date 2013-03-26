@@ -1,0 +1,92 @@
+body
+{
+background-color:black;
+color:#0A0;
+text-align: left;
+font-family:monospace;
+font-size:12px;
+}
+
+/*headers*/
+h1,h2,h3,h4,h5,h6
+{
+color:#AAA;
+font-size:15px;
+margin-bottom:15px;
+margin-top:15px;
+border-bottom: 1px solid #0A0; 
+}
+
+/*links*/
+a:link {color:#44aaff;}      /* unvisited link */
+a:visited {color:#DD4400;}   /* visited link */
+a:hover {color:#FF00FF;}     /* mouse over link */
+a:active {color:#FF00FF;}    /* selected link */ 
+
+img
+{
+height:100px;
+}
+
+/*tables*/
+table
+{
+border-collapse:collapse;
+}
+
+td, th
+{
+padding-right:5px;
+border: 1px solid #0A0; 
+}
+
+th
+{
+color:#AAA;
+}
+
+thead
+{
+font-weight: bold;
+border-bottom: 1px solid #0A0; 
+collapse: separate;
+}
+
+tr:nth-child(even) {background: #080808}
+
+/* forms */
+form
+{
+/*border: 1px solid #00AA00;*/
+white-space: nowrap;
+}
+
+input, textarea
+{
+color:#FFF;
+background-color:#000;
+font-family:monospace;
+font-size:10px;
+padding:1px;
+border:2px solid #555;
+border-radius: 3px;
+}
+
+input[type=submit]
+{
+color:#FFF;
+text-decoration:underline;
+cursor: pointer;
+*cursor: hand;
+}
+input[type=submit]:hover {color:#FF00FF;}  /* mouse over link */
+
+select
+{
+background-color:#000;
+font-family:monospace;
+font-size:10px;
+color:#FFF;
+cursor: pointer;
+*cursor: hand;
+}

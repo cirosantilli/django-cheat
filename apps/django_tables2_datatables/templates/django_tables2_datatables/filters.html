@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<table>
+    <thead>
+        <tr>
+            <th>{% trans "target" %}</th>
+            <th>{% trans "find" %}</th>
+            <th>{% trans "regex" %}</th>
+            <th>{% trans "smart" %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if filter_global %}
+        <tr>
+            <td>{% trans "global" %}</td>
+            <td><input type="text"     {{ datatable_filter_table_find_attr }}="{{ target_table }}" ></td>
+            <td><input type="checkbox" {{ datatable_filter_table_regex_attr }}="{{ target_table }}" ></td>
+            <td><input type="checkbox" {{ datatable_filter_table_smart_attr }}="{{ target_table }}" ></td>
+        </tr>
+        {% endif %}
+        {% for target_col in target_cols %}
+        <tr>
+            <td>{% trans "global" %}</td>
+            <td><input type="text"     {{ datatable_filter_col_table_find_attr }}="{{ target_col }}" ></td>
+            <td><input type="checkbox" {{ datatable_filter_col_table_regex_attr }}="{{ target_col }}" ></td>
+            <td><input type="checkbox" {{ datatable_filter_col_table_smart_attr }}="{{ target_col }}" ></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

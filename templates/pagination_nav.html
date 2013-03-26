@@ -1,0 +1,10 @@
+<span class="pagination_nav">
+    <a href="?page=1">&lt&lt</a> |
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">&lt</a> |
+    {% endif %}
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">&gt</a> |
+    {% endif %}
+    <a href="?page={{ page_obj.paginator.num_pages }}">&gt&gt</a>
+</span>

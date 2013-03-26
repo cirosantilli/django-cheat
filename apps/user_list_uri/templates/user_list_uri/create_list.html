@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+
+{% block title %}{{ creator.username }}{% endblock %}
+
+{% block content_title %}{{ creator.username }}{% endblock %}
+
+{% block content %}
+<h2>{% trans "create a new group" %}</h2>
+
+<form action="{% url urls_thisapp.create_list owner.username %}" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <p><input type="submit" value="{% trans "create" %}" /></p>
+</form>
+{% endblock %}

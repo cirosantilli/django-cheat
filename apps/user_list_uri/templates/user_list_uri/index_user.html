@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load django_tables2 %}
+
+{% block title %}{{ owner.username }}{% endblock %}
+
+{% block content_title %}{{ owner.username }}{% endblock %}
+
+{% block content %}
+
+    <table>
+        <tr>
+            <td>{% trans "owner" %}</td>
+            <td>{% include "accounts/user_link.html" with username=owner.username %}</td>
+        </tr>
+        <tr>
+            <td>{% trans "total items in database" %}</td>
+            <td>{{ total_items_db }}</td>
+        </tr>
+    </table>
+
+    <h2>{% trans "filter" %}</h2>
+    {% render_table table.filter %}
+
+    <h2>{% trans "items" %}</h2>
+    {% render_table table %}
+
+    <h2>{% trans "edit data" %}</h2>
+
+    <table>
+        <tr>
+            <td>{% trans "create new" %}</td>
+            <td><a href="{% url urls_thisapp.create_list owner.username %}">{% trans "do it" %}</a></td>
+        </tr>
+    </table>
+
+    <h3>{% trans "selected" %}</h3>
+    <table>
+        <form action="{% url urls_thisapp.bulk_action owner.username %}"
+                id="{{ table.bulk_form_id }}" method="post">{% csrf_token %}
+            <tr>
+                <td>{% trans "copy" %}</td>
+                <td><input type="submit" name="copy" value="do it" /></td>
+            </tr>
+            {% if user.username == owner.username %}
+                <tr>
+                    <td>{% trans "delete" %}</td>
+                    <td><input type="submit" name="delete" value="do it" /></td>
+                </tr>
+            {% endif %}
+        </form>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load i18n %}
+{% load django_tables2 %}
+
+{% block content %}
+
+    <h2>{% trans "owner" %}</h2>
+    {% include "accounts/user_link.html" with username=owner.username %}
+    
+    <h2>{% trans "description" %}</h2>
+      {{ list.description }}
+
+    <h2>{% trans "filter" %}</h2>
+      {% render_table table.filter %}
+
+    <h2>{% trans "items" %}</h2>
+      <div>{% trans "total items in database" %}: {{ total_items_db }}</div>
+      {% render_table table %}
+
+    <h2>{% trans "edit data" %}</h2>
+
+    <table>
+        <tr>
+            <td>{% trans "copy" %}</td>
+            <td>
+                <form action="{% url urls_thisapp.bulk_action owner.username %}"
+                        method="post">{% csrf_token %}
+                    <input type="hidden" name="id2" value="{{ list.id2 }}" />
+                    <input type="submit" name="copy" value="do it" />
+                </form>
+            </td>
+        </tr>
+    {% if user.username == owner.username %}
+        <tr>
+            <td>{% trans "delete" %}</td>
+            <td>
+                <form action="{% url urls_thisapp.bulk_action owner.username %}"
+                        method="post">{% csrf_token %}
+                    <input type="hidden" name="id2" value="{{ list.id2 }}" />
+                    <input type="submit" name="delete" value="do it" />
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>{% trans "update" %}</td>
+            <td><a href="{% url 'user_list_uri_update_list' owner.username list.id2 %}">{% trans "do it" %}</a></td>
+        </tr>
+    {% endif %}
+    </table>
+
+{% endblock %}

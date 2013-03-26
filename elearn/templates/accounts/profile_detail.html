@@ -1,0 +1,41 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}{% blocktrans with profile.user.username as username %}{{ username }}'s profile.{% endblocktrans %}{% endblock %}
+
+{% block content_title %}{{ profile.user.username }} {% if profile.user.get_full_name %}({{ profile.user.get_full_name }}){% endif %}{% endblock %}
+
+{% block content %}
+    <h2>{% trans "toc" %}</h2>
+    <ul>
+      <li><a href="{% url 'user_user_groups_index_user' profile.user.username %}">{% trans "user lists" %}</a></li>
+      <li><a href="{% url 'user_list_uri_index_user' profile.user.username %}">{% trans "uri lists" %}</a></li>
+    </ul>
+
+    <h2>{% trans "view" %}</h2>
+    <img class="mugshot" src="{{ profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}" />
+    <table>
+      {% if profile.user.get_full_name %}
+        <tr>
+          <td>{% trans "name" %}</td>
+          <td>{{ profile.user.get_full_name }}</td>
+        <tr/>
+      {% endif %}
+      {% if profile.user.email and not hide_email %}
+        <tr>
+          <td>{% trans "email" %}</td>
+          <td>{{ profile.user.email }}</td>
+        <tr/>
+      {% endif %}
+    </table>
+
+    {% if user.username == profile.user.username %}
+        <h2>{% trans "edit" %}</h2>
+        <ul>
+            <li><a href="{% url 'userena_profile_edit' user.username %}">{% trans "edit details" %}</a></li>
+            <li><a href="{% url 'userena_password_change' user.username %}">{% trans "change password" %}</a></li>
+            <li><a href="{% url 'userena_email_change' user.username %}">{% trans "change email" %}</a></li>
+        <ul>
+    {% endif %}
+{% endblock %}
