@@ -1,4 +1,4 @@
-#dir structure
+# dir structure
 
 * sample_project : a sample_project, to serve both as a template (covering stuff that is used in 95% of websites)
     and as a well documented project cheatsheet

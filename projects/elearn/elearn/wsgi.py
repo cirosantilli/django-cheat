@@ -17,6 +17,13 @@ import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "elearn.settings")
 
+##{ mod_wsgi
+import sys
+project_root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+##}
+
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.

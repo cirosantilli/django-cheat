@@ -1,141 +1,144 @@
-#!/usr/bin/env python
-
-#==================================================
-#
-# Ciro D. Santilli 
-#
-#==================================================
+#!/usr/bin/env pandoc
 
 #index
 
 #genearal sources
-#  
-#  http://www.djangobook.com
-#  http://djangosnippets.org/
-#
+  
+  http://www.djangobook.com
+  http://djangosnippets.org/
+
 #db interaction
-#  https://docs.djangoproject.com/en/dev/ref/models/fields/
-#  https://docs.djangoproject.com/en/dev/ref/models/relations/
-#  https://docs.djangoproject.com/en/dev/topics/db/queries/
-#  #learn _set + related_name magic
-#
+
+  https://docs.djangoproject.com/en/dev/ref/models/fields/
+  https://docs.djangoproject.com/en/dev/ref/models/relations/
+  https://docs.djangoproject.com/en/dev/topics/db/queries/
+  #learn _set + related_name magic
+
 #template language
-#  https://docs.djangoproject.com/en/dev/topics/templates/
-#  https://docs.djangoproject.com/en/dev/ref/templates/builtins/
-#  
-#  date:
-#    https://docs.djangoproject.com/en/dev/ref/templates/builtins/?from=olddocs
-#    https://docs.djangoproject.com/en/dev/ref/templates/builtins/#date-time
-#
-#  two fields that are unique together
-#    http://blog.gordaen.com/2009/07/08/mysql-unique-key-pairs/
-#
-#  context processor: define variables for every single template
-#    https://docs.djangoproject.com/en/dev/ref/templates/api/#writing-your-own-context-processors
-#    http://blog.madpython.com/2010/04/07/django-context-processors-best-practice/
-#    http://www.b-list.org/weblog/2006/jun/14/django-tips-template-context-processors/
-#
+
+  https://docs.djangoproject.com/en/dev/topics/templates/
+  https://docs.djangoproject.com/en/dev/ref/templates/builtins/
+  
+  date:
+    https://docs.djangoproject.com/en/dev/ref/templates/builtins/?from=olddocs
+    https://docs.djangoproject.com/en/dev/ref/templates/builtins/#date-time
+
+  two fields that are unique together
+    http://blog.gordaen.com/2009/07/08/mysql-unique-key-pairs/
+
+  context processor: define variables for every single template
+    https://docs.djangoproject.com/en/dev/ref/templates/api/#writing-your-own-context-processors
+    http://blog.madpython.com/2010/04/07/django-context-processors-best-practice/
+    http://www.b-list.org/weblog/2006/jun/14/django-tips-template-context-processors/
+
 #forms
-#  https://docs.djangoproject.com/en/dev/topics/forms/
-#  https://docs.djangoproject.com/en/dev/ref/forms/fields/
-#  https://docs.djangoproject.com/en/dev/ref/forms/api/
-#  https://docs.djangoproject.com/en/dev/ref/forms/widgets/
-#  http://tothinkornottothink.com/post/10815277049/django-forms-i-custom-fields-and-widgets-in-detail
-#    custom widgets
-#  https://docs.djangoproject.com/en/dev/ref/forms/validation/
-#
-#  http://mikepk.com/2010/08/python-django-forms-errors-fieldsets/
-#  #form customization. confirm email field.
-#
-#  http://charlesleifer.com/blog/djangos-inlineformsetfactory-and-you/
-#  #poll choices create at same time form
-#
-#  http://jayapal-d.blogspot.com.br/2009/08/reuse-django-admin-filteredselectmultip.html#comment-form
-#  #how to reuse django admin filteredselectmultiple
-#
+
+  https://docs.djangoproject.com/en/dev/topics/forms/
+  https://docs.djangoproject.com/en/dev/ref/forms/fields/
+  https://docs.djangoproject.com/en/dev/ref/forms/api/
+  https://docs.djangoproject.com/en/dev/ref/forms/widgets/
+  http://tothinkornottothink.com/post/10815277049/django-forms-i-custom-fields-and-widgets-in-detail
+    custom widgets
+  https://docs.djangoproject.com/en/dev/ref/forms/validation/
+
+  http://mikepk.com/2010/08/python-django-forms-errors-fieldsets/
+  #form customization. confirm email field.
+
+  http://charlesleifer.com/blog/djangos-inlineformsetfactory-and-you/
+  #poll choices create at same time form
+
+  http://jayapal-d.blogspot.com.br/2009/08/reuse-django-admin-filteredselectmultip.html#comment-form
+  #how to reuse django admin filteredselectmultiple
+
 #static content
-#  
-#
+  
+
 #pagination: 
-#  https://docs.djangoproject.com/en/dev/topics/pagination/?from=olddocs
-#
+
+  https://docs.djangoproject.com/en/dev/topics/pagination/?from=olddocs
+
 #user login
-#
-#  request context to use user in template. render vs render_to_response
-#     https://docs.djangoproject.com/en/dev/topics/http/shortcuts/#django.shortcuts.render
-#
+
+  request context to use user in template. render vs render_to_response
+     https://docs.djangoproject.com/en/dev/topics/http/shortcuts/#django.shortcuts.render
+
 
 #good apps
-#
-# https://bitbucket.org/kmike/django-widget-tweaks
 
 #required for mysql:
 
     #high level table operations:
+
         sudo pip install django_tables2
 
     #easy user creation/login:
+
         sudo pip install django-userena
 
-
 #TODO
-# serve project specific static files in app urls
-# define commands outside apps
-# count foreign key inverse
-# get field names/verbose names in templates
-# generic views for inlineformset
-#   https://github.com/AndrewIngram/django-extra-views
-#   https://docs.djangoproject.com/en/1.4/topics/forms/modelforms/#inline-formsets
-# generic views that depend on request:
-#   user / list something that belongs to the user
-# enforce unique username/groupname User/group
 
-##get started
+ serve project specific static files in app urls
 
-    #install
+ define commands outside apps
+ count foreign key inverse
+ get field names/verbose names in templates
+ generic views for inlineformset
+   https://github.com/AndrewIngram/django-extra-views
+   https://docs.djangoproject.com/en/1.4/topics/forms/modelforms/#inline-formsets
+ generic views that depend on request:
+   user / list something that belongs to the user
+ enforce unique username/groupname User/group
 
-        sudo aptitude install -y python-mysqldb
-        sudo pip install django
-            #install django
+#get started
 
-        python -c "import django; print(django.get_version())"
-            #check that django installed?
+##install
 
-    ##create project
+``` {.bash}
+sudo aptitude install -y python-mysqldb
+sudo pip install django
+```
 
-        #this creates a dir structure with some template files
+``` {.bash}
+python -c "import django; print(django.get_version())"
+```
 
-        p=
-        django-admin.py startproject $p
-            #create a new project called p
+##create project
 
-    #database
+#create template dir structure some files:
 
-        #setup database connexions
-        cd $p
-        vim settings.py
-            #ENGINE: 'django.db.backends.postgresql_psycopg2', 'django.db.backends.mysql', 'django.db.backends.sqlite3' or 'django.db.backends.oracle
-            #NAME: db name. for sqlite, it is a file, so give full path. for mysql, it is just the name
-            #USER: user you set up with the db
-            #PASS: pass you set up with the db
-            #HOST: empty if local machine
+``` {.bash}
+p=
+django-admin.py startproject $p
+    #create a new project called p
+```
 
-        mysql -u '<USER_NAME>' -p
-        create database <DB_NAME>
-        #create the database
+##create database
 
-    #run test server
+    #setup database connexions
+    cd $p
+    vim settings.py
+        #ENGINE: 'django.db.backends.postgresql_psycopg2', 'django.db.backends.mysql', 'django.db.backends.sqlite3' or 'django.db.backends.oracle
+        #NAME: db name. for sqlite, it is a file, so give full path. for mysql, it is just the name
+        #USER: user you set up with the db
+        #PASS: pass you set up with the db
+        #HOST: empty if local machine
 
-        #for this to work,
+    mysql -u '<USER_NAME>' -p
+    create database <DB_NAME>
+    #create the database
 
-        python manage.py runserver
-            #startd dev server on default port
+##run test server
 
-    #visit website
+    for this to work:
 
-        firefox http://127.0.0.1:8000/ 
+    python manage.py runserver
+        #startd dev server on default port
 
-##apps
+##visit website
+
+    firefox http://127.0.0.1:8000/ 
+
+#apps
 
     #apps are nothing but regular python modules
 
@@ -222,7 +225,7 @@
         #can be used to:
         #  modify db
 
-    #create
+    #create:
 
         p = Obj()
         p.save()
@@ -261,38 +264,38 @@
     #foreign key
         #on delete of referenced object, deletes pointer too!
 
-##static
+#static
 
-    #it is very slow to serve static files through wsgi or cgi
+it is very slow to serve static files through wsgi or cgi
 
-    #you must let the server to that for you
+you must let the server to that for you
 
-    #in settingsset STATIC_ROOT to somwhere where the server sees the static files:
-        vim settings.py
+in settingsset ``STATIC_ROOT`` to somwhere where the server sees the static files:
 
-        STATIC_ROOT = "/var/www/root/django/elearn/"
+    STATIC_ROOT = "/var/www/root/django/projectname/static"
 
-    #this would be a good setting, supposing you have serve root at
-    #``/var/www/root/``.
+this would be a good setting, supposing you have serve root at ``/var/www/root/``.
 
-    #dev server takes root at the root of the project
+dev server takes root at the root of the project
 
-    #automatically put all static files at STATIC_ROOT:
+to automatically copy all static files to ``STATIC_ROOT`` do:
 
-        ./manage.py collectstatic
+``` {.bash}
+    ./manage.py collectstatic
+```
 
-    #any missing dirs are created.
+any missing dirs are created.
 
-    #remember that you must have the permission to copy those files there.
-    #which normal users usually don't by default
+remember that you must have the permission to copy those files there.
+which normal users usually don't by default
 
-    #finally, give the preffix to all static files with static url:
+finally, give the preffix to all static files with static url:
 
-        STATIC_URL = 'http://localhost/django/elearn/static'
+    STATIC_URL = 'http://localhost/django/elearn/static'
 
-    #note how the http://localhost/ part could be anything,
-    #but the ``/django/elearn/static`` must be exactly that
-    #unless you use aliases.
+note how the http://localhost/ part could be anything,
+but the ``/django/elearn/static`` must be exactly that
+unless you use aliases.
 
 #pagination
 
@@ -316,7 +319,10 @@
 
 #commands
 
-    ./manage.py dbshell #open mysql, with password
+    #open mysql, password from settings file:
+
+        ./manage.py dbshell
+
     ./manage.py sqlclear accounts | ./manage.py dbshell
 
 #forms
@@ -368,6 +374,7 @@
         
         ./manage.py schemamigration --initial "$APP"
         #creates migration files
+
         ./manage.py migrate "$APP"
         #applies migration, changing south db and creating app db
             #only migration file is considered for this:
@@ -465,3 +472,17 @@
                     db.rename_table(self.new, self.old)
                     #deal with foreign keys
                     db.send_create_signal(app, [self.old_model])
+
+#apache deploy
+
+- point ``mod_wsgi`` to use your ``wsgi.py`` script.
+
+- ensure that the following are in the mod_wsgi pythonpath:
+
+    - apps
+    - ``settigs.py``
+    - ``urls.py``
+
+- ensure that static files are being served where your app expects them to be.
+
+    Consider using the ``Alias`` directive.

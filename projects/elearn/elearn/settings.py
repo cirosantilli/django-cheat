@@ -25,7 +25,7 @@ import django.conf.global_settings as DEFAULT_SETTINGS
 #  system template dirs
 #  app template dirs
 
-project_root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 my_django_root = os.path.dirname(os.path.dirname(project_root))
 
 #for current project only:
@@ -45,10 +45,9 @@ sys.path.append(global_apps_dir)
 # non app settings
 #===================================================
 
-APPEND_SLASH=True
-#https://docs.djangoproject.com/en/dev/ref/settings/#append-slash
-
 INSTALLED_APPS = [
+
+    #standard:
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -58,13 +57,12 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     #'django.contrib.admindocs',
 
-    #installed apps
+    #pypi:
     'guardian',
     'easy_thumbnails',
+    'south',
 
-    'south', #db migrations
-
-    #personal apps
+    #personal:
     'polls',
     'mycommands',
     'user_user_groups',
@@ -72,7 +70,6 @@ INSTALLED_APPS = [
     'issue_tracker',
     'project_specific',
 ]
-
 
 DATABASES = {
     'default': {
@@ -85,17 +82,25 @@ DATABASES = {
     }
 }
 
-##datetime
+#which urls.py file to use for entire site:
 
-#default date format. l10n has precedence over this if l10n is true.
+ROOT_URLCONF = 'elearn.urls'
 
-DATE_FORMAT="Y-m-d"
-DATETIME_FORMAT = "Y-m-d H:i:s"
-SHORT_DATETIME_FORMAT = "Y-m-d H:i:s"
+#it must be in the pythonpath.
 
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+#<https://docs.djangoproject.com/en/dev/ref/settings/#append-slash>
+APPEND_SLASH=True
+
+#Python dotted path to the WSGI application used by Django's runserver:
+WSGI_APPLICATION = 'elearn.wsgi.application'
+#must be in pythonpath
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = '59wh9zzfvdj09owpp0=+w=nc_nmdw_*(k*0yw=uq_2k7au2or4'
+
+SITE_ID = 1
+
+##media
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -116,20 +121,13 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-#which urls.py file to use for entire site
-ROOT_URLCONF = 'elearn.urls'
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '59wh9zzfvdj09owpp0=+w=nc_nmdw_*(k*0yw=uq_2k7au2or4'
-
-SITE_ID = 1
-
-##deployment
+##debug
 
 #users listed unser ADMINS will get emails whenever an uncaught exception
 #happens and if DEBUG is True
 #Those exceptions are always logged into the server's error logs.
 DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -164,7 +162,7 @@ LOGGING = {
     }
 }
 
-##{static
+##static
 
 #static files are stuff like css and images
 #for deployement, set STATIC_ROOT and do : ./manage.py collectstatic
@@ -196,12 +194,11 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-#}
+##template
 
 #context processors: add context to every template
-#TEMPLATE_CONTEXT_PROCESSORS.append('django_tables2_datatables.context_processor.processor')
 
-TEMPLATE_DEBUG = DEBUG
+#TEMPLATE_CONTEXT_PROCESSORS.append('django_tables2_datatables.context_processor.processor')
 
 #must be absolute paths
 # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -226,6 +223,8 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = list(DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS)
 
+##timezone
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -243,14 +242,23 @@ USE_L10N = False
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-# Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'elearn.wsgi.application'
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+LANGUAGE_CODE = 'en-us'
+
+##datetime
+
+#default date format. l10n has precedence over this if l10n is true.
+
+DATE_FORMAT="Y-m-d"
+DATETIME_FORMAT = "Y-m-d H:i:s"
+SHORT_DATETIME_FORMAT = "Y-m-d H:i:s"
 
 #===================================================
 # apps
 #===================================================
 
-#<userena>
+## userena
 
 #add apps required by userena
 INSTALLED_APPS.extend([
@@ -264,17 +272,14 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-#email settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+### email settings
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 #EMAIL_USE_SSL = True
-
 EMAIL_HOST = 'smtp.gmail.com'
-
 #EMAIL_PORT = 25
 EMAIL_PORT = 587
-
 EMAIL_HOST_USER = 'mytemanu0@gmail.com' #confirmation mails will be sent from this email. not all hosts work, gmail does.
 EMAIL_HOST_PASSWORD = 'thpaofmyte'
 
@@ -291,12 +296,10 @@ USERENA_PROFILE_LIST_TEMPLATE = 'accounts/profile_list.html'
 USERENA_PROFILE_DETAIL_TEMPLATE = 'accounts/profile_detail.html'
 #USERENA_HIDE_EMAIL=True
 
-#</userena>
+##datatable
 
-#<datatable>
 INSTALLED_APPS.extend([
     'django_tables2',
     'django_tables2_datatables',
     'master_checkbox',
 ])
-#>datatable
