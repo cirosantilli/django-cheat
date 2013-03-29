@@ -475,14 +475,28 @@ unless you use aliases.
 
 #apache deploy
 
-- point ``mod_wsgi`` to use your ``wsgi.py`` script.
+this is a checklist for deployment with ``Apache``
 
-- ensure that the following are in the mod_wsgi pythonpath:
+- make sure that the apache user ( ``www-data`` by default on ubuntu ) has read permissions to all files below!
 
-    - apps
+    for this, it needs to have read premissions to all the directories above those files too.
+
+- point ``mod_wsgi`` to use your ``wsgi.py`` script, located by default in ``appname_wsgi/wsgi.py``
+
+    the actual location of that script has no importance
+
+- ensure that the following are in the ``mod_wsgi`` pythonpath:
+
     - ``settigs.py``
+
     - ``urls.py``
 
-- ensure that static files are being served where your app expects them to be.
+    - all your apps
 
-    Consider using the ``Alias`` directive.
+    append to this path with the ``WSGIPythonPath`` directive.
+
+- ensure that static files are being served where your app expects them to be
+
+    Consider using the ``Alias`` directive from ``SATIC_URL`` to ``STATIC_DIR``
+
+- ensure that ``TEMPLATE_DIR`` contains the correct path to your cross project templates.

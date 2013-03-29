@@ -1,49 +1,30 @@
-# Django settings for elearn project.
-
-import os
-import os.path
 import sys
 
 from django.core.urlresolvers import reverse
-
 import django.conf.global_settings as DEFAULT_SETTINGS
 
-#===================================================
-# dir tree
-#===================================================
+#the following settings change for different deployments
 
-#dir tree:
-#- /my_django_root/apps/
-#- /              /projects/project_root/apps/
-#- /              /                     /templates/
-#- /              /                     /project_root/settings.py
-#- /              /static/
-#- /              /templates/
-
-#app load order is given by the python path
-#template load order will be:
-#  system template dirs
-#  app template dirs
-
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-my_django_root = os.path.dirname(os.path.dirname(project_root))
-
-#for current project only:
-project_apps_dir = os.path.join(project_root,'apps')
-project_templates_dir = os.path.join(project_root,'templates')
-project_static_files_dir = os.path.join(project_root,'static')
-
-#ma be shared between projects:
-global_apps_dir = os.path.join(my_django_root,"apps")
-global_templates_dir = os.path.join(my_django_root,'templates')
-global_static_files_dir = os.path.join(my_django_root,'static')
-
-sys.path.append(project_apps_dir)
-sys.path.append(global_apps_dir)
+from .settings_site_specific import (
+    project_apps_dir,
+    project_templates_dir,
+    project_static_files_dir,
+    global_apps_dir,
+    global_templates_dir,
+    global_static_files_dir,
+    DATABASES
+) 
 
 #===================================================
-# non app settings
+# not site specific
 #===================================================
+
+DATABASES = DATABASES
+
+sys.path.append( project_apps_dir )
+sys.path.append( global_apps_dir  )
+
+#stuff from now on is independent of deployment specific settings
 
 INSTALLED_APPS = [
 
@@ -71,17 +52,6 @@ INSTALLED_APPS = [
     'project_specific',
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'elearn_django',              # Or path to database file if using sqlite3.
-        'USER': 'test',                       # Not used with sqlite3.
-        'PASSWORD': 'asdf',                   # Not used with sqlite3.
-        'HOST': '',                           # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                           # Set to empty string for default. Not used with sqlite3.
-    }
-}
-
 #which urls.py file to use for entire site:
 
 ROOT_URLCONF = 'elearn.urls'
@@ -92,10 +62,13 @@ ROOT_URLCONF = 'elearn.urls'
 APPEND_SLASH=True
 
 #Python dotted path to the WSGI application used by Django's runserver:
+
 WSGI_APPLICATION = 'elearn.wsgi.application'
+
 #must be in pythonpath
 
 # Make this unique, and don't share it with anybody.
+
 SECRET_KEY = '59wh9zzfvdj09owpp0=+w=nc_nmdw_*(k*0yw=uq_2k7au2or4'
 
 SITE_ID = 1
