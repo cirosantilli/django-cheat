@@ -17,7 +17,7 @@ import os
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "elearn.settings")
 
-##{ mod_wsgi
+##{ mod_wsgi TODO get rid of this! cannot add to path properly without this
 import sys
 project_root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 if project_root not in sys.path:

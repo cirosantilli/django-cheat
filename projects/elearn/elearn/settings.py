@@ -1,18 +1,21 @@
 import sys
-
 from django.core.urlresolvers import reverse
 import django.conf.global_settings as DEFAULT_SETTINGS
 
-#the following settings change for different deployments
+#===================================================
+# site specific
+#===================================================
 
-from .settings_site_specific import (
+from settings_deploy import (
     project_apps_dir,
     project_templates_dir,
     project_static_files_dir,
     global_apps_dir,
     global_templates_dir,
     global_static_files_dir,
-    DATABASES
+    DATABASES,
+    STATIC_ROOT,
+    STATIC_URL,
 ) 
 
 #===================================================
@@ -141,12 +144,12 @@ LOGGING = {
 #for deployement, set STATIC_ROOT and do : ./manage.py collectstatic
 #this will put all the static files collected (including from apps)
 #into the that static root
-STATIC_ROOT = '/var/www/root/django/elearn/static'
+STATIC_ROOT = STATIC_ROOT
 
 #prefix to be used for static files.
 #will be exported to template files by some module included by default.
 #you must set your web server to serve files from STATIC_ROOT at that url location
-STATIC_URL = 'http://localhost/django/elearn/static/'
+STATIC_URL = STATIC_URL
 
 #in this example, supposing apache has serve root at /var/www/root, it will work
 

@@ -15,7 +15,12 @@ setup(
     #long_description=open('readme.md').read(),
     install_requires=[
         "django >= 1.5",
+        "MySQL-python >= 1.2.3"
         "django-tables2",
         "django-userena",
+        #'greenlet',
+        #'gevent',
+        #'pymongo',
+        #'psycopg2',
     ],
 )
