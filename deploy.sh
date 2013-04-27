@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 set -u # error on undefined variable
 set -e # stop execution if one command return != 0
 
@@ -67,18 +68,26 @@ if true; then
         clone_wsgi_dir="${clone_dir}wsgi/"
         clone_static_dir="${clone_wsgi_dir}static/"
 
-        cp -lru "$static_root"*                 "$clone_static_dir"
-        cp -lru "$modules_dir"*                 "$clone_libs_dir"
+        #restore repo to initial state
+        cd  "$clone_dir"
+        git clean -df
+        if git checkout HEAD~; then :; fi #this may give an error the first time
+        cd -
 
-        cp -lru *                                                   "$clone_dir"
-        mv      "$clone_dir$settings_dir"       "$clone_settings_dir"
-        cd      "$clone_settings_dir"
-        rm      settings.py
-        ln -s   settings_deploy/openshift.py    settings.py
-        mv      wsgi.py                         "${clone_wsgi_dir}application.py"
+        cp -lru     "$static_root"*                 "$clone_static_dir"
+        cp -Llru    "$modules_dir"*                 "$clone_libs_dir"
+        cp -lru     *                               "$clone_dir"
+        rm -rf      "$clone_settings_dir"
+        mv          "$clone_dir$settings_dir"       "$clone_settings_dir"
+
+        rm          "$clone_settings_dir"/settings_deploy.py
+        ln -s       "$clone_settings_dir"/settings_deploy/openshift.py    settings_deploy.py
+        mv          "$clone_settings_dir"/wsgi.py                         "${clone_wsgi_dir}application"
+
+        #commit
         cd  "$clone_dir"
         git add *
-        git commit -am 'upload'
-        git push origin master
+        #git commit -am 'upload'
+        #git push -f origin master
 
 fi
