@@ -31,7 +31,6 @@ import os.path
 #  system template dirs
 #  app template dirs
 
-openshift_project_name = 'djangoelearn'
 my_django_root  = os.path.dirname( os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) ) )
 
 project_root    = os.path.join( my_django_root, 'projects', 'elearn' )
@@ -58,5 +57,4 @@ DATABASES = {
 }
 
 STATIC_ROOT = os.path.join( os.path.dirname( my_django_root ), 'deploy', 'openshift', openshift_project_name, 'wsgi', 'static' )
-
 STATIC_URL = 'http://' + openshift_project_name + 'djangoelearn-cirosantilli.rhcloud.com/TODO'

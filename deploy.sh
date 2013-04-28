@@ -7,6 +7,12 @@ set -e # stop execution if one command return != 0
 
 #this is just a prototype before I do it in python and use info from settings.py
 
+#the main ideas are:
+
+#- separated deployment specific settings from other settings (dbs, etc) and symlink to the right one
+
+#- hardlink everything to the deploy dir. It is quick and memory cheap to create hardlinks.
+
 #suggested dir structure:
 
 #- django/
@@ -55,9 +61,13 @@ if true; then
 
             project_name="elearn"
 
+        #name of the app at openshift:
+
+            openshift_project_name="elearndjango"
+
         #same as djangos STATIC_ROOT conf: (TODO get this using python...)
 
-            static_root="/var/www/root/django/elearn/static"
+            static_root="/var/www/root/django/elearn/static/"
 
     ##main
 
@@ -68,26 +78,26 @@ if true; then
         clone_wsgi_dir="${clone_dir}wsgi/"
         clone_static_dir="${clone_wsgi_dir}static/"
 
-        #restore repo to initial state
-        cd  "$clone_dir"
-        git clean -df
-        if git checkout HEAD~; then :; fi #this may give an error the first time
-        cd -
+        cp -lr      "$static_root"*                 "$clone_static_dir"
+        cp -Llr     "$modules_dir"*                 "$clone_libs_dir"
+        cp -lrf     * .gitignore                    "$clone_dir"
 
-        cp -lru     "$static_root"*                 "$clone_static_dir"
-        cp -Llru    "$modules_dir"*                 "$clone_libs_dir"
-        cp -lru     *                               "$clone_dir"
-        rm -rf      "$clone_settings_dir"
         mv          "$clone_dir$settings_dir"       "$clone_settings_dir"
-
-        rm          "$clone_settings_dir"/settings_deploy.py
-        ln -s       "$clone_settings_dir"/settings_deploy/openshift.py    settings_deploy.py
-        mv          "$clone_settings_dir"/wsgi.py                         "${clone_wsgi_dir}application"
+        cd          "$clone_settings_dir"
+        mv          settings_deploy/openshift.py    settings_deploy.py
+        rm -r       settings_deploy/
+        mv          wsgi.py                         ../../wsgi/application
+        cd -
 
         #commit
         cd  "$clone_dir"
         git add *
-        #git commit -am 'upload'
-        #git push -f origin master
+        git commit -am 'upload'
+        git push -f origin master
 
+        #clean up deploy repo:
+        git reset --hard HEAD~
+        git clean -df
+
+        rhc app restart -a "$openshift_project_name"
 fi

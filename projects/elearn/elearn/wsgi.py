@@ -14,6 +14,11 @@ framework.
 
 """
 import os
+import sys
+
+#TODO put this in a separate file
+if 'OPENSHIFT_REPO_DIR' in os.environ:
+    sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'],'libs'))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "elearn.settings")
 
